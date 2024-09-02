@@ -1,0 +1,33 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+provider "aws" {
+  region     = "us-west-1"
+  access_key = "PK"
+  secret_key = "SK
+   profile = "default"  # O el nombre de tu perfil configurado en ~/.aws/credentials
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0b5399be8c6ff5239" # Cambia esto por la AMI base que prefieras
+  instance_type = "t2.micro"
+  tags = {
+    Name = "ExampleInstance"
+  }
+}
+
+resource "aws_ami_from_instance" "example_ami" {
+  name               = "example-ami"
+  source_instance_id = aws_instance.example.id
+  description        = "An example AMI created from an EC2 instance"
+  
+  tags = {
+    Name = "ExampleAMI"
+  }
+}
