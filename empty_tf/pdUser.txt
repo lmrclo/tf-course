@@ -1,0 +1,31 @@
+# Configure the PagerDuty provider
+terraform {
+  required_providers {
+    pagerduty = {
+      source  = "pagerduty/pagerduty"
+      version = "< 3.15"
+    }
+  }
+}
+
+provider "pagerduty" {
+   token = var.pagerduty_token
+}
+
+# Create a PagerDuty team
+resource "pagerduty_team" "tf" {
+  name        = "tf"
+  description = "Tf Team"
+}
+
+# Create a PagerDuty user
+resource "pagerduty_user" "manager" {
+  name  = "mngr_tf"
+  email = "marcelopoblette+mngr_tf@pagerduty.com"
+}
+
+# Create a team membership
+resource "pagerduty_team_membership" "earline_engineering" {
+  user_id = pagerduty_user.manager.id
+  team_id = pagerduty_team.tf.id
+}
