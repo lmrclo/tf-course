@@ -31,3 +31,4 @@ resource "aws_ami_from_instance" "example_ami" {
     Name = "ExampleAMI"
   }
 }
+Adding this commit
