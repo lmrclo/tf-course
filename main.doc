@@ -29,7 +29,7 @@ resource "aws_ami_from_instance" "example_ami" {
   
   tags = {
     Name = "ExampleAMI"
-###
+#
   }
 }
 Adding this commit
